@@ -1,12 +1,14 @@
 FROM alpine:latest
 
-RUN apk add --no-cache bash
+RUN apk add --no-cache wget unzip
 
-COPY pocketbase.exe /pocketbase
-RUN chmod +x /pocketbase
+# Tải bản Linux 64-bit của PocketBase
+RUN wget -q https://github.com/pocketbase/pocketbase/releases/download/v0.30.4/pocketbase_0.30.4_linux_amd64.zip \
+    && unzip pocketbase_0.30.4_linux_amd64.zip \
+    && mv pocketbase /pocketbase \
+    && chmod +x /pocketbase \
+    && rm pocketbase_0.30.4_linux_amd64.zip
 
 EXPOSE 10000
 
 CMD ["/pocketbase", "serve", "--http=0.0.0.0:10000"]
-
-

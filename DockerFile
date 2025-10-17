@@ -1,0 +1,10 @@
+FROM alpine:latest
+
+RUN apk add --no-cache bash
+
+COPY pocketbase.exe /pocketbase
+RUN chmod +x /pocketbase
+
+EXPOSE 10000
+
+CMD ["/pocketbase", "serve", "--http=0.0.0.0:10000"]
